@@ -6,12 +6,11 @@ import { apiLogin, apiRegister } from "../../service/auth.js";
 import { actionTypes } from '../../redux/actions/actionTypes.js';
 import {useDispatch, useSelector} from 'react-redux'
 import {setActiveItem} from "../../redux/slides/main1Slide.js"
-
 const LoginPage = () => {
   const location = useLocation()
   const dispatch = useDispatch()
   const navigate = useNavigate()
-  const {isLoggedIn, msg, update} = useSelector((state:any)=> state.auth)
+  const {isLoggedIn} = useSelector((state:any)=> state.auth)
   const [isRegister, setIsRegister] = useState(location.state?.flag)
   const [payload, setPayload] = useState({name: '',phone: '',password: ''})  
   const [invalidFields, setInvalidFields] = useState([{name : "",message : ""}])  
@@ -21,7 +20,7 @@ const LoginPage = () => {
 
   useEffect(() => {
     isLoggedIn && navigate('/')
-  }, [isLoggedIn])
+  }, [isLoggedIn, navigate])
   const handleSubmit = async () => {
   if(isRegister){
     if(payload.name && payload.password && payload.phone){
@@ -46,74 +45,34 @@ const LoginPage = () => {
     if( payload.password && payload.phone){
     try {
       const response = await apiLogin(payload);
-      if(response.data.err === 0 ){       
-        dispatch({ type: actionTypes.LOGIN_SUCCESS, data: response.data })
-         navigate('/');
-        dispatch(setActiveItem(1))
-         alert("Đăng nhập thành công!")
+      if (!response?.data?.checkPhone) {
+        alert("Bạn điền sai số điện thoại!")        
+      }else if(!response?.data?.checkPass){
+        alert("Bạn điền sai mật khẩu!")
+      }else if(response?.data?.checkPhone && response?.data?.checkPass){
+          dispatch({ type: actionTypes.LOGIN_SUCCESS, data: response.data })
+          navigate('/');
+          dispatch(setActiveItem(1))
+          alert("Đăng nhập thành công!")
       }else{
-        alert(response.data.msg)
-      };
+          dispatch({type : actionTypes.LOGOUT})
+          alert(response.data.msg)
+      }
+      // console.log(response);
+ 
     } catch (error) {
+      alert(error)
       dispatch({ type: actionTypes.LOGIN_FAIL, data: error.msg });
     }
+  }else if( !payload.password && !payload.phone){
+    alert("Bạn điền thiếu thông tin!")
   }else if( payload.password && !payload.phone){
-    alert("bạn điền thiếu thông tin")
+    alert("Bạn điền thiếu số điện thoại!")
+  }else if( !payload.password && payload.phone){
+    alert("Bạn điền thiếu mật khẩu!")
   }
 }
 }
-
-
-  // let finalPayload = isRegister ? payload : {
-  //   phone: payload.phone,
-  //   password : payload.password
-  // }
-//   let invalids = validate(payload)
-//   if (invalids === 0) {
-//   }
-  
-// }
-  // let fields = Object.entries(payload)
-  // // console.log(fields)
-  // fields.forEach(item => {
-  //   if (item[1] === "") {
-  //       setInvalidFields(
-  //         (pre) => [...pre , {
-  //           name : item[0],
-  //           message  : " Không được để trống"
-  //         }]
-  //       )
-  //     invalids++
-  //   }
-  //   })
-  //   // console.log(invalidFields);
-  //     fields.forEach(item => {
-  //       switch (item[0]) {
-  //           case 'password':
-  //               if (item[0].length < 6) {
-  //                   setInvalidFields(prev => [...prev, {
-  //                       name: item[0],
-  //                       message: 'Mật khẩu phải có tối thiểu 6 kí tự.'
-  //                   }])
-  //                   invalids++
-  //               }
-  //               break;
-  //           case 'phone':
-  //               if (!+item[0]) {
-  //                   setInvalidFields(prev => [...prev, {
-  //                       name: item[0],
-  //                       message: 'Số điện thoại không hợp lệ.'
-  //                   }])
-  //                   invalids++
-  //               }
-  //               break
-
-  //           default:
-  //               break;
-  //       }
-  //   })
-  //   return invalids
-
   return (
     <section className='mw-600 m-auto my-[10px]'>
       <div className='bg-[#ffffff] max-w-[600px] m-auto px-[30px] pt-[30px] pb-[100px] rounded-[10px]'>
@@ -150,7 +109,7 @@ const LoginPage = () => {
         <div className='mb-[20px] mt-[20px]'>
           <Button
             text={isRegister ? 'Đăng kí' : 'Đăng nhập'}
-            className={'bg-[#3961fb] text-[#ffffff] w-full h-[45px] font-bold'} onClick={handleSubmit} icon={undefined}          />
+            className={'bg-[#3961fb] text-[#ffffff] w-full h-[45px] font-bold'} onClick={handleSubmit} icon={undefined} bgColor={undefined} textColor={undefined} px={undefined}          />
         </div>
         <div className='flex justify-between'>
           {

@@ -1,3 +1,4 @@
+
 import axiosConfig from "../axiosConfig"
 
 export const apiGetCategories = () => new Promise(async(resolve, reject) => {
@@ -12,3 +13,4 @@ export const apiGetCategories = () => new Promise(async(resolve, reject) => {
         reject(error)
     }
 })
+apiGetCategories()

@@ -3,7 +3,7 @@ import ItemSidebar from './HomeItem/ItemSidebar.tsx'
 import { apiGetCategories } from '../../../service/category'
 import { apiGetPrices } from '../../../service/price'
 import { apiGetAcreages } from '../../../service/acreage'
-import {dataPrice1 ,dataAcreage1} from "./data.js"
+// import {dataPrice1 ,dataAcreage1} from "./data.js"
 import ItemSidebarPrice from './HomeItem/itemSidebarPrice.tsx'
 import ItemSidebarAcreage from './HomeItem/ItemSidebarAcreage.tsx'
 
@@ -13,17 +13,17 @@ const Sidebar = () => {
         msg : "",
       })
     const [dataPrice, setDataPrice] = useState({
-        arr: dataPrice1,
+        arr: [],
         msg : "",
       })
     const [dataAcreage, setDataAcreage] = useState({
-        arr: dataAcreage1,
+        arr: [],
         msg: [],
       })
     useEffect(() => {
       categories()
-      // prices()
-      // acreage()
+      prices()
+      acreage()
     }, [])
 
     const categories = async () => {
@@ -38,31 +38,33 @@ const Sidebar = () => {
         setData({...data , msg : error})
       }}
     
-    // const prices = async () => {
-    //     try {
-    //       const response = await apiGetPrices()
-    //       if(response?.data.err === 0) {
-    //         setDataPrice({...dataPrice, arr: response.data.response.sort((a:any, b:any)=> {return +a.order - +b.order})})
-    //       }else{
-    //         setDataPrice({...dataPrice , msg : response.data.msg})
-    //       }
-    //     } catch (error) {
-    //       setDataPrice({...dataPrice , msg : error})
-    //     }
-    //   }
+    const prices = async () => {
+        try {
+          const response = await apiGetPrices()
+          if(response?.data.err === 0) {
+            setDataPrice({...dataPrice, arr: response.data.response.sort((a:any, b:any)=> {return +a.order - +b.order})})
+          }else{
+            setDataPrice({...dataPrice , msg : response.data.msg})
+          }
+        } catch (error) {
+          setDataPrice({...dataPrice , msg : error})
+        }
+      }
     
-    // const acreage = async () => {
-    //     try {
-    //       const response = await apiGetAcreages()
-    //       if(response?.data.err === 0) {
-    //         setDataAcreage({...dataAcreage, arr: response.data.response.sort((a:any, b:any)=> {return +a.order - +b.order})})
-    //       }else{
-    //         setDataAcreage({...dataAcreage , msg : response.data.msg})
-    //       }
-    //     } catch (error) {
-    //       setDataAcreage({...dataAcreage , msg : error})
-    //     }
-    //   }
+    const acreage = async () => {
+        try {
+          const response = await apiGetAcreages()
+          if(response?.data.err === 0) {
+            setDataAcreage({...dataAcreage, arr: response.data.response.sort((a:any, b:any)=> {return +a.order - +b.order})})
+          }else{
+            setDataAcreage({...dataAcreage , msg : response.data.msg})
+          }
+        } catch (error) {
+          setDataAcreage({...dataAcreage , msg : error})
+        }
+      }
+      // console.log(dataPrice , dataAcreage);
+      
     return (
         <div className='w-full'>
             <ItemSidebar content={data} title='Danh sách cho thuê' />

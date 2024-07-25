@@ -3,14 +3,17 @@ import ItemDetail from '../../pages/HomePage/components/HomeItem/ItemDetail.tsx'
 import Button from "../Button/Button.tsx";
 import { useSelector} from "react-redux"
 import icons from '../../ultils/icons.js'
-
+import {scrollToTop} from "../../ultils/scrollTop.js"
 const {FaArrowLeft, FaArrowRight} = icons
+
+
 const Pagination = ({ data = []}) => {
   const {area1} = useSelector((state:any) => state.search)
   const {postLimit} = useSelector((state:any) => state.postLimit)
   const activeItem = useSelector((state: any) => state.main1.activeItem); 
   const [newData , setNewData] = useState([])
   const [isLoading, setIsLoading] = useState(true); 
+  
   const checkSearch = (arr:any ,postLimit:any)=>{
       const isEmptyObject = (obj:any) => {
         return Object.keys(obj).length === 0;
@@ -92,6 +95,8 @@ const Pagination = ({ data = []}) => {
     setEnd(currentPage * perPage);
   }, [currentPage, perPage]);
   const showPage = newData?.length > 0 && newData.map((item:any, index:any) => {
+    // console.log(newData);
+    
     if (index >= start && index < end) {
       return (
           <div key={index}>
@@ -105,6 +110,7 @@ const Pagination = ({ data = []}) => {
               title={item?.title}
               users={item?.users}
               id={item?.id}
+              Overviews={item?.Overviews}
             />
         </div>
       );
@@ -114,29 +120,34 @@ const Pagination = ({ data = []}) => {
 
   const handlePrev = () => {
     setCurrentPage((prevPage) => Math.max(prevPage - 1, 1));
+    scrollToTop()
   };
 
   const handleNext = () => {
     setCurrentPage((prevPage) => Math.min(prevPage + 1, total));
+    scrollToTop()
+
   };
 
   const handleChange = (page:any) => {
     setCurrentPage(page);
+    scrollToTop()
+
   };
 
   return (
     <div className="">
       {isLoading ? (
-        <div>Loading...</div> // Hiển thị thông báo loading
+        <div>Loading...</div>
       ) : (
         <>
           <div className="box">{showPage}</div>
           <div className="box-btn flex">
-            <Button text={''} onClick={handlePrev} className={"m-[5px] p-[5px] border-[2px]"} icon={<FaArrowLeft />} />
+            <Button text={''} onClick={handlePrev} className={"m-[5px] p-[5px] border-[2px]"} icon={<FaArrowLeft />} bgColor={undefined} textColor={undefined} px={undefined} />
             {number.map((it, index) => (
-              <Button key={index} text={it} onClick={() => handleChange(it)} className={`m-[5px] p-[5px] border-[2px] text-center ${currentPage === it ? "bg-red-700 text-white" : ""}`} icon={undefined} />
+              <Button key={index} text={it} onClick={() => handleChange(it)} className={`m-[5px] p-[5px] border-[2px] text-center ${currentPage === it ? "bg-red-700 text-white" : ""}`} icon={undefined} bgColor={undefined} textColor={undefined} px={undefined} />
             ))}
-            <Button text={''} onClick={handleNext} className={'m-[5px] p-[5px] border-[2px] text-center'} icon={<FaArrowRight />} />
+            <Button text={''} onClick={handleNext} className={'m-[5px] p-[5px] border-[2px] text-center'} icon={<FaArrowRight />} bgColor={undefined} textColor={undefined} px={undefined} />
           </div>
         </>
       )}

@@ -7,6 +7,7 @@ import PaymentHistory from "../pages/PersonalPage/components/PaymentHistory.tsx"
 import ServicePriceList from "../pages/PersonalPage/components/ServicePriceList.tsx"
 import Contact from "../pages/PersonalPage/components/Contact.tsx"
 import Transfer from "../pages/PersonalPage/DepositMoney/Transfer.tsx"
+import Posting from "../pages/PersonalPage/Posting/Posting.tsx"
 export const personalRoutes =  [
     {
         path : "/personal/ManagePostings",
@@ -43,5 +44,9 @@ export const personalRoutes =  [
     {
         path : "/personal/DepositMoney/transfer",
         PageChild : Transfer,
+    },
+    {
+        path : "/personal/DepositMoney/posting",
+        PageChild : Posting,
     },
 ]

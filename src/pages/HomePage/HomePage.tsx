@@ -11,7 +11,7 @@ const HomePage = () => {
           Tìm kiếm chỗ thuê ưng ý
         </h1>
         <p className='text-[15px] text-[#65676b] font-normal leading-normal'>
-          Kênh thông tin Homestay số 1 Việt Nam - Website đăng tin cho thuê phòng trọ, nhà nguyên căn, căn hộ, ở ghép nhanh, hiệu quả với 100.000+ tin đăng và 2.500.000 lượt xem mỗi tháng.
+          Kênh thông tin Homestay số 1 Việt Nam - Website cho thuê phòng trọ, nhà nguyên căn, căn hộ, hiệu quả với 100.000+ tin đăng và 2.500.000 lượt xem mỗi tháng.
         </p>
       </div>
       <div className='flex justify-around mb-[50px]'>

@@ -1,15 +1,15 @@
 
 import HomePage from "../pages/HomePage/HomePage.tsx";
 import NotFoundPage from "../pages/NotFoundPage/NotFoundPage.tsx";
-import FavouritePage from "../pages/Favourite/FavouritePage.tsx";
 import LoginPage from "../pages/LoginPage/LoginPage.tsx";
 import PersonalPage from "../pages/PersonalPage/PersonalPage.tsx";
 import RentingRoom from '../pages/RentingRoom/RentingRoom.tsx'
 import RentalHouse from '../pages/RentalHouse/RentalHouse.tsx'
 import ApartmentRental from '../pages/ApartmentRental/ApartmentRental.tsx'
-import NewsPage from "../pages/NewsPage/NewsPage.tsx";
 import ServiceSense from '../pages/ServiceSense/ServiceSense.tsx'
 import DetailPost from "../pages/DetailPost/DetailPost.tsx";
+import Contract from "../pages/Contract/Contract.tsx";
+import BookRoomPage from "../pages/BookRoomPage/BookRoomPage.tsx";
 
 export const routes =  [
     {
@@ -21,8 +21,8 @@ export const routes =  [
         isShowProminentArea: true
     },
     {
-        path : "/favourite",
-        page : FavouritePage,
+        path : "/BookRoom",
+        page : BookRoomPage,
         isShowHeader : true,
         isShowFooter : true,
         isShowSearch: false,
@@ -61,8 +61,8 @@ export const routes =  [
         isShowProminentArea:true
     },
     {
-        path : "/newsPage",
-        page : NewsPage,
+        path : "/contract",
+        page : Contract,
         isShowHeader : true,
         isShowFooter : true,
         isShowSearch: false
@@ -90,5 +90,5 @@ export const routes =  [
         isShowFooter : true,
         isShowSearch: false,
         isShowProminentArea: false
-    }
+    },
 ]

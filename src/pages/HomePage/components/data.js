@@ -1,5 +1,19 @@
 export const data = [
-    
+    {
+        id : 1,
+        value : "Cho thuê phòng trọ",
+        categoryCode : "ChoThuePhongtro"
+    },
+    {
+        id : 2,
+        value : "Nhà cho thuê",
+        categoryCode : "NhaChoThue"
+    },
+    {
+        id : 3,
+        value : "Cho thuê căn hộ",
+        categoryCode : "ChoThueCanHo"
+    },
 ]
 export const dataPrice1 =  [
     {
@@ -80,3 +94,10 @@ export const dataAcreage1 = [
 
 
 
+export const removeVnAndSpaces =(str)=> {
+    return str
+      .normalize('NFD') // Chuẩn hóa chuỗi
+      .replace(/[\u0300-\u036f]/g, '') // Loại bỏ các dấu
+      .replace(/đ/g, 'd').replace(/Đ/g, 'D') // Thay thế 'đ' và 'Đ'
+      .replace(/\s+/g, ''); // Loại bỏ khoảng trắng
+  }

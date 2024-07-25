@@ -45,6 +45,7 @@ const initState = {
           ...state,
           isLoggedIn: false,
           token: null,
+          id : "",
           msg: ''
         }
       case actionTypes.CHANGE_INFO : 

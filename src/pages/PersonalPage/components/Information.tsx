@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useSelector, useDispatch } from "react-redux";
 import { changeInfo } from '../../../service/changeInfo.js';
 import {actionTypes} from '../../../redux/actions/actionTypes.js'
+import { apiUploadImages } from '../../../service/post.js';
 const Information = () => {
   const dispatch = useDispatch()
   const { username, phone, id, avatar, zalo } = useSelector((state: any) => state.auth);
@@ -30,9 +31,9 @@ const Information = () => {
         formData.append('username', payload.username);
         formData.append('phone', payload.phone);
         formData.append('zalo', payload.zalo);
-        if (payload.avatar instanceof File) {
-          formData.append('avatar', payload.avatar);
-        }
+        formData.append('avatar', payload.avatar);
+        // if (payload.avatar instanceof File) {
+        // }
         const response = await changeInfo(formData);
         dispatch({ type: actionTypes.CHANGE_INFO, data: response.data })
         // console.log(response);
@@ -40,6 +41,9 @@ const Information = () => {
         setPayload({...payload, newPassword : ""})
         setShowModal(false);
         setPassword('');
+        if(response?.status === 200){
+          alert("Thay đổi thông tin thành công!")
+        }
       } catch (error) {
         alert("Bạn nhập sai mật khẩu!");
       }
@@ -55,17 +59,31 @@ const Information = () => {
     }
   };
 
-  const handleAvatarChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleAvatarChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files && e.target.files[0];
     if (file) {
-      setPayload((pre) => ({ ...pre, avatar: file }));
-      const reader = new FileReader();
-      reader.onload = () => {
-        if (typeof reader.result === 'string') {
-          setNewAvatar(reader.result);
-        }
-      };
-      reader.readAsDataURL(file);
+      // @ts-ignore
+      const uploadAssetsName = process.env.REACT_APP_UPLOAD_ASSETS_NAME;
+      if (!uploadAssetsName) {
+        console.error("REACT_APP_UPLOAD_ASSETS_NAME is not defined");
+        return;
+      }
+    let formData = new FormData()
+      formData.append('file', file)
+      formData.append('upload_preset',uploadAssetsName)
+      let response = await apiUploadImages(formData)
+          setNewAvatar( response.data?.secure_url);
+      setPayload((pre) => ({ ...pre, avatar: response.data?.secure_url }));
+
+      // console.log(response);
+      // setPayload((pre) => ({ ...pre, avatar: file }));
+      // const reader = new FileReader();
+      // reader.onload = () => {
+      //   if (typeof reader.result === 'string') {
+      //     setNewAvatar(reader.result);
+      //   }
+      // };
+      // reader.readAsDataURL(file);
     }
   };
   return (

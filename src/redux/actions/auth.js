@@ -45,18 +45,18 @@ export const login = (payload) => async (dispatch) => {
         })
     }
 }
-export const ChangeInfo= (payload) => async (dispatch) => {
-    try {
-        const response = await changeInfo(payload)
-        // console.log(response);
-        dispatch({
-            type: actionTypes.CHANGE_INFO,
-            data: response.data
-        })
-    } catch (error) {
-        alert(error)
-    }
-}
-export const logout = () => ({
-    type: actionTypes.LOGOUT
-})
+// export const ChangeInfo= (payload) => async (dispatch) => {
+//     try {
+//         const response = await changeInfo(payload)
+//         // console.log(response);
+//         dispatch({
+//             type: actionTypes.CHANGE_INFO,
+//             data: response.data
+//         })
+//     } catch (error) {
+//         alert(error)
+//     }
+// }
+// export const logout = () => ({
+//     type: actionTypes.LOGOUT
+// })

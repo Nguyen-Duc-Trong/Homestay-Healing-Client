@@ -19,8 +19,8 @@ const HeaderTop = () => {
 
 };
 function formatCurrency(amount:any) {
-  let amountStr = amount.toString();
-  return amountStr.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+  let amountStr = amount?.toString();
+  return amountStr?.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 }
 const gotohome = ()=>{
   navigate("/")
@@ -40,11 +40,11 @@ const gotohome = ()=>{
 
           {!isLoggedIn &&  <div className="flex">
             <Button
-            text={"Đăng nhập"}
-            onClick={() => goLogin(false)} className={'bg-[#3961FB] text-[#ffffff] h-[40px] w-[100px] mx-[5px] rounded-[10px] py-[2px] px-[4px] '} icon={undefined} />
-          <Button
-            text={"Đăng ký"}
-            onClick={() => goLogin(true)} className={'bg-[#3961FB] text-[#ffffff] h-[40px] w-[100px] mx-[5px] rounded-[10px] py-[2px] px-[4px] '} icon={undefined} />
+              text={"Đăng nhập"}
+              onClick={() => goLogin(false)} className={'bg-[#3961FB] text-[#ffffff] h-[40px] w-[100px] mx-[5px] rounded-[10px] py-[2px] px-[4px] '} icon={undefined} bgColor={undefined} textColor={undefined} px={undefined} />
+            <Button
+              text={"Đăng ký"}
+              onClick={() => goLogin(true)} className={'bg-[#3961FB] text-[#ffffff] h-[40px] w-[100px] mx-[5px] rounded-[10px] py-[2px] px-[4px] '} icon={undefined} bgColor={undefined} textColor={undefined} px={undefined} />
           </div>}
           {isLoggedIn &&  
             <Link to={`/personal/Information`} onClick={()=> handleHeaderActive(2,0)}>            
@@ -55,7 +55,7 @@ const gotohome = ()=>{
                   <div className=" mx-[10px]  ">
                       <span className="">Tên tài khoản : <span className="font-[600]"> {username}</span></span> <br />
                       {/* <small className="">Mã tài khoản : <span className="font-[600]">{id}</span> </small><br /> */}
-                      <small className="">TK chính :<span className="font-[600]">{formatCurrency(money) }  VND</span></small>
+                      <small className="">TK chính :<span className="font-[600]">{formatCurrency(money) ? formatCurrency(money) : 0 }  VND</span></small>
 
                   </div>
               </div>

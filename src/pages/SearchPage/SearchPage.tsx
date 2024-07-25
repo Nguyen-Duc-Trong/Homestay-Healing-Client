@@ -10,7 +10,6 @@ import { apiGetProvinces } from '../../service/province.js';
 import { apiGetCategories } from '../../service/category.js';
 import {apiGetAcreages} from "../../service/acreage.js"
 import {apiGetPrices} from '../../service/price.js'
-import {apiGetPostLimit} from '../../service/post.js'
 
 const { MdOutlineNavigateNext, TfiLocationPin, RiMoneyDollarCircleLine, SlCrop, FaRegBuilding, LuDelete, CiSearch } = icons;
 
@@ -40,12 +39,6 @@ const SearchPage = () => {
       const response4 = await apiGetPrices();
       dispatch(setPrice(response4?.data?.response));
     }
-    // const getPostLimits = async (query:any) => {
-    //   const response5 = await apiGetPostLimit(query);
-    //   dispatch(setPostLimit(response5?.data?.response))
-    //   console.log(response5);
-      
-    // }
     getCategory();
     getProvince();
     getAcreages();
@@ -70,7 +63,7 @@ const SearchPage = () => {
     const queryCodes = Object.entries(queries).filter((item:any) => item[0].includes('Code'))
     let queryCodeObj = {}
     queryCodes.forEach((item:any) => {queryCodeObj[item[0]] = item[1]})
-    // console.log(queryCodes);
+    console.log(queryCodes);
     dispatch(setPostLimit(queryCodeObj))
   }
   
@@ -103,8 +96,8 @@ const SearchPage = () => {
             // @ts-ignore
             queries.acreage} defaultText={'Chọn diện tích'} fontWeight={undefined} />
         </span>
-        <span className='flex-1 mx-[3px]'>
-          <Button text={'Tìm kiếm'} onClick={handleSearch} className={'w-full h-[35px] text-[#fff] text-[13px] bg-[#0071c2] font-bold'} icon={<CiSearch />} />
+        <span className='flex-1 mx-[5px]'>
+          <Button text={'Tìm kiếm'} onClick={handleSearch} className={'w-full h-[35px] text-[#fff] text-[13px] bg-[#0071c2] font-bold'} icon={<CiSearch />} bgColor={undefined} textColor={undefined} px={undefined} />
         </span>
       </div>
       {isShowModal && <PopupSearch handleSubmit={handleSubmit} queries={queries} name={name} content={content} setIsShowModal={setIsShowModal} />}
